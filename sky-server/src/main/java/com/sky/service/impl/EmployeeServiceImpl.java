@@ -88,10 +88,10 @@ public class EmployeeServiceImpl implements EmployeeService {
         employee.setUpdateTime(LocalDateTime.now());
 
         //设置当前记录创建人id和修改人id
-        employee.setCreateUser(BaseContext.getCurrentId());
+        employee.setCreateUser(BaseContext.getCurrentId());//目前写个假数据，后期修改
         employee.setUpdateUser(BaseContext.getCurrentId());
 
-        employeeMapper.insert(employee);//后续步骤定义
+        employeeMapper.insert(employee);
     }
 
     /**
@@ -105,10 +105,13 @@ public class EmployeeServiceImpl implements EmployeeService {
         //开始分页查询
         PageHelper.startPage(employeePageQueryDTO.getPage(), employeePageQueryDTO.getPageSize());
 
-        Page<Employee> page = employeeMapper.pageQuery(employeePageQueryDTO);//后续定义
+        Page<Employee> page = employeeMapper.pageQuery(employeePageQueryDTO);
 
         long total = page.getTotal();
         List<Employee> records = page.getResult();
+
+        // 将每个员工的密码替换为占位符，避免返回密码摘要
+        records.forEach(employee -> employee.setPassword("****"));
 
         return new PageResult(total, records);
     }
@@ -136,7 +139,6 @@ public class EmployeeServiceImpl implements EmployeeService {
      */
     public Employee getById(Long id) {
         Employee employee = employeeMapper.getById(id);
-        //在返回员工信息前，隐藏密码字段的真实内容，保护数据安全
         employee.setPassword("****");
         return employee;
     }
@@ -151,13 +153,9 @@ public class EmployeeServiceImpl implements EmployeeService {
         BeanUtils.copyProperties(employeeDTO, employee);
 
         employee.setUpdateTime(LocalDateTime.now());
-        //从threadlocal中获取当前登录用户的id
         employee.setUpdateUser(BaseContext.getCurrentId());
 
         employeeMapper.update(employee);
     }
-
-
-
 
 }
