@@ -66,4 +66,6 @@ public interface DishMapper {
     void update(Dish dish);
 
     List<Dish> list(Dish dish);
+
+    void updateStatus(Integer status, Long id);
 }
