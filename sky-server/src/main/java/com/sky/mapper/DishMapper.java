@@ -68,4 +68,11 @@ public interface DishMapper {
     List<Dish> list(Dish dish);
 
     void updateStatus(Integer status, Long id);
+
+    @Select("select d.* from dish d " +
+            "inner join setmeal_dish sd on d.id = sd.dish_id " +
+            "where sd.setmeal_id = #{id}")
+    List<Dish> getBySetmealId(Long id);
+
+
 }
