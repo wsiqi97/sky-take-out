@@ -31,4 +31,5 @@ sky:
     wechat-pay-cert-file-path: D:\wechatpay_166D96F876F45C7D07CE98952A96EC980368ACFC.pem
     notify-url: https://www.weixin.qq.com/wxpay/pay.php
     refund-notify-url: https://www.weixin.qq.com/wxpay/pay.php
+    mock-refund: true
 
